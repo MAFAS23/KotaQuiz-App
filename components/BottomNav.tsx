@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const BottomNav: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'mydeck' | 'collection'>('mydeck');
+interface BottomNavProps {
+  activeTab: 'mydeck' | 'library';
+  onTabChange: (tab: 'mydeck' | 'library') => void;
+}
 
+const BottomNav: React.FC<BottomNavProps> = ({ activeTab, onTabChange }) => {
   return (
     <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
       {/* The "Melonjong" (Oval) Container */}
@@ -17,7 +20,7 @@ const BottomNav: React.FC = () => {
 
         {/* My Deck Button */}
         <button 
-          onClick={() => setActiveTab('mydeck')}
+          onClick={() => onTabChange('mydeck')}
           className={`relative z-10 flex-1 h-full rounded-full flex items-center justify-center text-sm font-semibold transition-colors duration-200 ${
             activeTab === 'mydeck' ? 'text-white' : 'text-gray-400 hover:text-gray-200'
           }`}
@@ -25,14 +28,14 @@ const BottomNav: React.FC = () => {
           My Deck
         </button>
 
-        {/* Collection Button */}
+        {/* Library Button */}
         <button 
-          onClick={() => setActiveTab('collection')}
+          onClick={() => onTabChange('library')}
           className={`relative z-10 flex-1 h-full rounded-full flex items-center justify-center text-sm font-semibold transition-colors duration-200 ${
-            activeTab === 'collection' ? 'text-white' : 'text-gray-400 hover:text-gray-200'
+            activeTab === 'library' ? 'text-white' : 'text-gray-400 hover:text-gray-200'
           }`}
         >
-          Collections
+          Library
         </button>
       </div>
     </div>

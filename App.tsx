@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TopBar from './components/TopBar';
 import DeckCard from './components/DeckCard';
 import BottomNav from './components/BottomNav';
+import LibraryView from './components/LibraryView';
 import { DeckProps } from './types';
 
 const App: React.FC = () => {
-  // Mock Data mimicking the image content
+  const [activeTab, setActiveTab] = useState<'mydeck' | 'library'>('mydeck');
+
+  // Mock Data mimicking the image content for the Home view
   const decks: DeckProps[] = [
     {
       id: '1',
@@ -37,7 +40,6 @@ const App: React.FC = () => {
       ],
       colorTheme: 'yellow'
     },
-    // Added one more to show scrolling
     {
       id: '4',
       title: 'Travel Essentials',
@@ -51,23 +53,33 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col relative overflow-hidden">
-      {/* Top Navigation / Search */}
+      {/* Top Navigation / Search - Always visible or conditional based on preference. 
+          The previous prompt implied a specific header for Home, keeping it consistent for now 
+          but could be customized per tab if needed. */}
       <TopBar />
 
       {/* Main Content Area */}
-      <main className="flex-grow px-6 py-6 pb-32 overflow-y-auto no-scrollbar">
-        <div className="space-y-6">
-          {decks.map((deck) => (
-            <DeckCard 
-              key={deck.id}
-              {...deck}
-            />
-          ))}
-        </div>
+      <main className="flex-grow px-6 py-6 overflow-y-auto no-scrollbar">
+        
+        {activeTab === 'mydeck' ? (
+          /* Home / My Deck View */
+          <div className="space-y-6 pb-32">
+            {decks.map((deck) => (
+              <DeckCard 
+                key={deck.id}
+                {...deck}
+              />
+            ))}
+          </div>
+        ) : (
+          /* Library View */
+          <LibraryView />
+        )}
+
       </main>
 
       {/* Floating Bottom Navigation */}
-      <BottomNav />
+      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
 };
