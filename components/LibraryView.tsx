@@ -24,11 +24,11 @@ const LibraryView: React.FC = () => {
 
   return (
     <div className="w-full h-full relative">
-      <div className="px-6 pb-32">
+      <div className="px-2 pb-32">
         
         {/* Horizontal Scrollable Filters (Pill Shaped/Lonjong) */}
         <div className="w-full overflow-x-auto no-scrollbar mb-8">
-          <div className="flex space-x-3">
+          <div className="flex space-x-2">
             {filters.map((filter) => (
               <button
                 key={filter}
